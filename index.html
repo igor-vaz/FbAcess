@@ -14,7 +14,6 @@
 </div>
 
 <script>
-  console.log("ola");
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
@@ -22,6 +21,7 @@
      js = d.createElement(s); js.id = id;
      js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5";
      fjs.parentNode.insertBefore(js, fjs);
+     console.log("ola");
    }(document, 'script', 'facebook-jssdk'));
   
   window.fbAsyncInit = function() {
