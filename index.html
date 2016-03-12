@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
+<title>Social networking websites Login</title>
 <meta charset="UTF-8">
 </head>
 <body>
@@ -13,8 +13,11 @@
 	
 </div>
 
+<!--Facebook Login -->
+<!--start-->
+
 <script>
-  console.log("ola");
+  console.log("hello");
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
@@ -31,6 +34,27 @@
     });
   };
 </script>
+<!-- end-->
+
+
+<!--Google Login-->
+<!--start-->
+
+<script src="https://apis.google.com/js/platform.js" async defer>
+	(function(googleUser) {
+	  var profile = googleUser.getBasicProfile();
+	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	  console.log('Name: ' + profile.getName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail());
+	}
+</script>
+
+<meta name="google-signin-client_id" content="549154768191-sipm09nrdmbr2af851ttt7lnkdpn788m.apps.googleusercontent.com">
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+<!--end-->
+
 
 </body>
 </html>
