@@ -6,33 +6,64 @@
 </head>
 <body>
 
-
-<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true"></div> 
-
-<div>
-	
-</div>
-
 <!--Facebook Login -->
 <!--start-->
 
 <script>
-  console.log("hello");
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-   
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '999683833453465',
-      xfbml      : true,
-      version    : 'v2.5'
-    });
-  };
+  	// This is called with the results from from FB.getLoginStatus().
+	function statusChangeCallback(response) {
+		if (response.status === 'connected') {
+			// Logged into your app and Facebook.
+			getUserData(response);
+		} else if (response.status === 'not_authorized') {
+			// The person is logged into Facebook, but not your app.
+			document.getElementById('status').innerHTML = 'Please log ' +
+			'into this app.';
+		} else {
+			// The person is not logged into Facebook, so we're not sure if
+			// they are logged into this app or not.
+			document.getElementById('status').innerHTML = 'Please log ' +
+			'into Facebook.';
+		}
+	}
+
+	function checkLoginState() {
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '999683833453465',
+			cookie     : true,
+			xfbml      : true,
+			version    : 'v2.5' 
+		});
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	};
+
+	(function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	function getUserData(resp) {
+	   	FB.api(
+	  	  	"/"+resp.authResponse.userID, 'get', { access_token: resp.authResponse.accessToken, fields: 'id,name,gender,email'},
+	    	function (response2) {
+		   		if (response2 && !response2.error) {
+		       		document.getElementById('status').innerHTML =JSON.stringify(response2);
+		   		}
+	    	}
+		);    
+	}
 </script>
 <!-- end-->
 
@@ -53,6 +84,11 @@
 <meta name="google-signin-client_id" content="549154768191-sipm09nrdmbr2af851ttt7lnkdpn788m.apps.googleusercontent.com">
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
 <!--end-->
 
 
